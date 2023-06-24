@@ -1169,14 +1169,14 @@ switch ( process.argv[2] ) {
         break;
 } 
 
-+----------------------------------------------------------------------+
-| 													                                           |
-| node app.js add 8 2  -> enter in terminal to run the file		         |
-|  		    		 -> 'add 8 2' are command line arguments		             |
-|	10			 -> process.argv has the arguments in array 	               |
-|				 -> arguments start from index "2"                             |
-|													                                             |
-+----------------------------------------------------------------------+
++-------------------------------------------------------------------------------+
+| 									        |
+| node app.js add 8 2  -> enter in terminal to run the file			|
+|  		    		 -> 'add 8 2' are command line arguments	|
+|	10			 -> process.argv has the arguments in array 	|
+|				 -> arguments start from index "2"   		|
+|										|
++-------------------------------------------------------------------------------+
 
 
 
