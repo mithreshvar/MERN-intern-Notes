@@ -1,0 +1,1291 @@
+SQL: 
+row is record, col is field, 1 row is tuple
+
+DDL - Data definition : create, alter, drop, truncate
+DML - Data manipulation : insert, update, delete
+DCL - Data conotrol : grant, revoke
+TCL - Transaction Control : commit, rollback, save point
+DQL - Data Query : select
+
+
+mysql> use studentdatabase
+Database changed
+
+mysql> create table students(ID varchar(20), Name varchar(20), gender varchar(1));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into students values(1, 'Ryan', 'm');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into students values(2, 'Joana', 'f');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from students;
++------+-------+--------+
+| ID   | Name  | gender |
++------+-------+--------+
+| 1    | Ryan  | m      |
+| 2    | Joana | f      |
++------+-------+--------+
+2 rows in set (0.04 sec)
+
+mysql> insert into students values(3, 'karthi', 'M');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into students values(4, 'santosh', 'M');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from students;
++------+---------+--------+
+| ID   | Name    | gender |
++------+---------+--------+
+| 1    | Ryan    | m      |
+| 2    | Joana   | f      |
+| 3    | karthi  | M      |
+| 4    | santosh | M      |
++------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql>  alter table students add rollno varchar(20);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++------+---------+--------+--------+
+| ID   | Name    | gender | rollno |
++------+---------+--------+--------+
+| 1    | Ryan    | m      | NULL   |
+| 2    | Joana   | f      | NULL   |
+| 3    | karthi  | M      | NULL   |
+| 4    | santosh | M      | NULL   |
++------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> update students set rollno = 1 where id = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+---------+--------+--------+
+| ID   | Name    | gender | rollno |
++------+---------+--------+--------+
+| 1    | Ryan    | m      | 1      |
+| 2    | Joana   | f      | NULL   |
+| 3    | karthi  | M      | NULL   |
+| 4    | santosh | M      | NULL   |
++------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> update students set rollno = 2 where id = 2;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set rollno = 3 where id = 3;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set rollno = 4 where id = 4;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+---------+--------+--------+
+| ID   | Name    | gender | rollno |
++------+---------+--------+--------+
+| 1    | Ryan    | m      | 1      |
+| 2    | Joana   | f      | 2      |
+| 3    | karthi  | M      | 3      |
+| 4    | santosh | M      | 4      |
++------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> delete from students where name='Ryan';
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from students;
++------+---------+--------+--------+
+| ID   | Name    | gender | rollno |
++------+---------+--------+--------+
+| 2    | Joana   | f      | 2      |
+| 3    | karthi  | M      | 3      |
+| 4    | santosh | M      | 4      |
++------+---------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  alter table students add age int;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update students set age = 19 where id = 2;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set age = 18  where id = 3;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set age = 19  where id = 4;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+---------+--------+--------+------+
+| ID   | Name    | gender | rollno | age  |
++------+---------+--------+--------+------+
+| 2    | Joana   | f      | 2      |   19 |
+| 3    | karthi  | M      | 3      |   18 |
+| 4    | santosh | M      | 4      |   19 |
++------+---------+--------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into students values(5, 'sakthi', 'M', 5, 18);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into students values(6, 'raghul', 'M', 6, 18);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into students values(7, 'ram', 'M', 7, 18);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into students values(8, 'mohan', 'M', 8, 18);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into students values(9, 'prasanth', 'M', 9, 19);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select age, count(*) from students group by age;
++------+----------+
+| age  | count(*) |
++------+----------+
+|   19 |        3 |
+|   18 |        5 |
++------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from students order by age;
++------+----------+--------+--------+------+
+| ID   | Name     | gender | rollno | age  |
++------+----------+--------+--------+------+
+| 3    | karthi   | M      | 3      |   18 |
+| 5    | sakthi   | M      | 5      |   18 |
+| 6    | raghul   | M      | 6      |   18 |
+| 7    | ram      | M      | 7      |   18 |
+| 8    | mohan    | M      | 8      |   18 |
+| 2    | Joana    | f      | 2      |   19 |
+| 4    | santosh  | M      | 4      |   19 |
+| 9    | prasanth | M      | 9      |   19 |
++------+----------+--------+--------+------+
+8 rows in set (0.00 sec)
+
+
+
+Tasks :
+
+joints, avg and sum !
+
+
+
+=======================================================================================================================================================
+
+
+
+MONGO DB !!!
+
+use test
+switched to db test
+db . testcollection . insert ( { ld: I } )
+db.testCollection.insert({Id:2, name: 'karthi', gender: 'm', age: '20'})
+db.testCollection.insert({Id:3, name: 'raghul', gender: 'm', age: '20'})
+db.testCollection.insert({Id:4, name: 'naveen', gender: 'm', age: '19'})
+db.testCollection.insert({Id:5, name: 'kumar', gender: 'm', age: '19'})
+db.testCollection.insert({Id:6, name: 'jhon', gender: 'm', age: '30'})
+db.testCollection.find()
+{
+  _id: ObjectId("64916ba8c68ccf956353216c"),
+  Id: 1
+}
+{
+  _id: ObjectId("64916cccc68ccf956353216d"),
+  Id: 2,
+  name: 'karthi',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d03c68ccf956353216e"),
+  Id: 3,
+  name: 'raghul',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d18c68ccf956353216f"),
+  Id: 4,
+  name: 'naveen',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d25c68ccf9563532170"),
+  Id: 5,
+  name: 'kumar',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d7ac68ccf9563532171"),
+  Id: 6,
+  name: 'jhon',
+  gender: 'm',
+  age: '30'
+}
+
+db.testCollection.updateOne({Id:1}, { $set: {name:'mith',gender:'m',age:'20'}})
+{
+  _id: ObjectId("64916ba8c68ccf956353216c"),
+  Id: 1,
+  age: '20',
+  gender: 'm',
+  name: 'mith'
+}
+{
+  _id: ObjectId("64916cccc68ccf956353216d"),
+  Id: 2,
+  name: 'karthi',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d03c68ccf956353216e"),
+  Id: 3,
+  name: 'raghul',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d18c68ccf956353216f"),
+  Id: 4,
+  name: 'naveen',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d25c68ccf9563532170"),
+  Id: 5,
+  name: 'kumar',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d7ac68ccf9563532171"),
+  Id: 6,
+  name: 'jhon',
+  gender: 'm',
+  age: '30'
+}
+db.testCollection.insertMany([{Id:7, name: 'krishna', gender: 'm', age: '19'} , {Id:8, name: 'varadhan', gender: 'm', age: '20'} , {Id:9, name: 'mohan', gender: 'm', age: '19'}])
+db.testCollection.find()
+{
+  _id: ObjectId("64916ba8c68ccf956353216c"),
+  Id: 1,
+  age: '20',
+  gender: 'm',
+  name: 'mith'
+}
+{
+  _id: ObjectId("64916cccc68ccf956353216d"),
+  Id: 2,
+  name: 'karthi',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d03c68ccf956353216e"),
+  Id: 3,
+  name: 'raghul',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d18c68ccf956353216f"),
+  Id: 4,
+  name: 'naveen',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d25c68ccf9563532170"),
+  Id: 5,
+  name: 'kumar',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d7ac68ccf9563532171"),
+  Id: 6,
+  name: 'jhon',
+  gender: 'm',
+  age: '30'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532172"),
+  Id: 7,
+  name: 'krishna',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532173"),
+  Id: 8,
+  name: 'varadhan',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532174"),
+  Id: 9,
+  name: 'mohan',
+  gender: 'm',
+  age: '19'
+}
+db.testCollection.deleteOne({Id:9})
+db.testCollection.find()
+{
+  _id: ObjectId("64916ba8c68ccf956353216c"),
+  Id: 1,
+  age: '20',
+  gender: 'm',
+  name: 'mith'
+}
+{
+  _id: ObjectId("64916cccc68ccf956353216d"),
+  Id: 2,
+  name: 'karthi',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d03c68ccf956353216e"),
+  Id: 3,
+  name: 'raghul',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d18c68ccf956353216f"),
+  Id: 4,
+  name: 'naveen',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d25c68ccf9563532170"),
+  Id: 5,
+  name: 'kumar',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d7ac68ccf9563532171"),
+  Id: 6,
+  name: 'jhon',
+  gender: 'm',
+  age: '30'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532172"),
+  Id: 7,
+  name: 'krishna',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532173"),
+  Id: 8,
+  name: 'varadhan',
+  gender: 'm',
+  age: '20'
+}
+db.testCollection.findOne({'name':'krishna'})
+{
+  _id: ObjectId("64917024c68ccf9563532172"),
+  Id: 7,
+  name: 'krishna',
+  gender: 'm',
+  age: '19'
+}
+db.testCollection.find({'age' : {"$in" : ['30','19']} })
+{ś
+  _id: ObjectId("64916d18c68ccf956353216f"),
+  Id: 4,
+  name: 'naveen',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d25c68ccf9563532170"),
+  Id: 5,
+  name: 'kumar',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532172"),
+  Id: 7,
+  name: 'krishna',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d7ac68ccf9563532171"),
+  Id: 6,
+  name: 'jhon',
+  gender: 'm',
+  age: '30'
+}ś
+
+
+===============================================================================================================================
+
+
+db.testCollection.find().sort({age:1})
+
+
+{
+  _id: ObjectId("64916d18c68ccf956353216f"),
+  Id: 4,
+  name: 'naveen',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d25c68ccf9563532170"),
+  Id: 5,
+  name: 'kumar',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532172"),
+  Id: 7,
+  name: 'krishna',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916cccc68ccf956353216d"),
+  Id: 2,
+  name: 'karthi',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d03c68ccf956353216e"),
+  Id: 3,
+  name: 'raghul',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532173"),
+  Id: 8,
+  name: 'varadhan',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916ba8c68ccf956353216c"),
+  Id: 1,
+  age: '20',
+  gender: 'm',
+  name: 'mith'
+}
+{
+  _id: ObjectId("64916d7ac68ccf9563532171"),
+  Id: 6,
+  name: 'jhon',
+  gender: 'm',
+  age: '30'
+}
+
+db.testCollection.find().sort({age:1})
+
+{
+  _id: ObjectId("64916d7ac68ccf9563532171"),
+  Id: 6,
+  name: 'jhon',
+  gender: 'm',
+  age: '30'
+}
+{
+  _id: ObjectId("64916cccc68ccf956353216d"),
+  Id: 2,
+  name: 'karthi',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916d03c68ccf956353216e"),
+  Id: 3,
+  name: 'raghul',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532173"),
+  Id: 8,
+  name: 'varadhan',
+  gender: 'm',
+  age: '20'
+}
+{
+  _id: ObjectId("64916ba8c68ccf956353216c"),
+  Id: 1,
+  age: '20',
+  gender: 'm',
+  name: 'mith'
+}
+{
+  _id: ObjectId("64916d18c68ccf956353216f"),
+  Id: 4,
+  name: 'naveen',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64916d25c68ccf9563532170"),
+  Id: 5,
+  name: 'kumar',
+  gender: 'm',
+  age: '19'
+}
+{
+  _id: ObjectId("64917024c68ccf9563532172"),
+  Id: 7,
+  name: 'krishna',
+  gender: 'm',
+  age: '19'
+}
+
+==============================================================================================================================
+
+
+let and const 'ES6' (2016 yr) features
+
+var can be redeclared , has no block scorpe , hoists all variables at top
+
+..............................
+. var a = 20;                .
+. var a = 60;   // no error  .
+..............................
++--------------------------+
+| No block scope !         |
++--------------------------+
+| var a = 20;              |
+| {                        |
+|     var a = 60;          |
+|     console.log(a); //60 |
+| }                        |
+| console.log(a); //60     |
++--------------------------+
+
++--------------------------+
+| Has block scope !        |
++--------------------------+
+| let a = 20;              |
+| {                        |
+|     let a = 60;          |
+|     console.log(a); //60 |
+| }                        |
+| console.log(a); //20     |
++--------------------------+
+
+
+DATA TYPES :
+------------
+
+1) number - integer, infinity, -infinity, NaN
+let a = "sdfa" * 0;  //NaN
+
+2) bigint 2*53
+let b = 10n;  // n -> bigint
+
+3) string
+
+let str = 'sdfs';
+let str = "sdfs";
+
+//concatination 
+
+let a =10;
+let b =20; 
+let str = "addition of "+a+" and "+b+" is "+(a+b)+"\n";  // addition of 10 and 20 is 30
+let str2 = `addition of ${a} and ${b} is ${a+b}`;        // addition of 10 and 20 is 30
+
+4) null
+let obj = null;
+
+5) undefined
+let x ;  // x -> undefined
+
+6) boolean
+let a = true;  //typeof a -> boolean
+
+
+// hoisting
+
+console.log(x) // undefined
+var x =10
+
+7) object
+
+const user = {
+    college: "SECE",
+    email: "jhon@gmail.com",
+    phone: 123456789,
+    age: 23,
+}
+user.school = "ABC";
+console.log(user)      //  Object { college: "SECE", email: "jhon@gmail.com", phone: 123456789, age: 23, school: "ABC" }
+delete user.college    //  deletes attribute college
+Object.freeze(user);   //  freezes an object ( no updation, deletion, creation of attributes )
+Object.keys(user);     //  returns an array of keys -->> [ "school", "email", "phone", "age" ]
+Object.values(user);   //  returns an array of keys -->> [ "ABC", "jhon@gmail.com", "123456789", "23" ]
+
+
+//  *** mutation ***  //
+
+const user = {
+    name: 'hanza',
+    age: 23,
+}
+
+const user2 = user;
+user2.age = 40;
+console.log( user, user2 )    //   {name: 'hanza', age:40} {name: 'hanza', age:40}
+
+// cloning 
+
+const user = {
+    name: 'hanza',
+    age: 23,
+}
+
+const user3 = { ...user, class: "CSE" };	// ... -> spread operator (coppies the key: value pairs)  // deep copy
+user3.age = 40;
+console.log( user, user2 )    //   {name: 'hanza', age:23} {name: 'hanza', age: 40, class: "CSE"}
+
+
+
+const details = {
+    address: {
+        street: "second street",
+        city : "cbe"
+    } 
+}
+console.log(details.address.city)  // cbe
+console.log(details.name)          // undefined
+
+const details = {
+    city: 'cbe' 
+}
+console.log(details.address.city)  // error
+console.log(details.address?.city)  // undefined
+
+for (const key in details) {
+    console.log(key, details[key])  // city cbe
+}
+
+
+//function
+
+function sum (n1, n2) {
+    return (n1+n2);
+}
+console.log(sum(10,20))  // 30
+
+
+function sum (n1, n2) {
+    if (typeof n1 !== 'number' || typeof n2 !== 'number') return "Invalid Number";
+    return (n1+n2);
+}
+console.log(sum("ds10",20))  // Invalid Number
+
+
+// Difference bw == and ===
+
+== checks for truthy or falsy
+=== also checks for type 
+
+0 == false -> true
+0 === false -> false
+
+
+// Arrow function
+
+const sum = (n1, n2) => {
+    return (n1+n2);
+}
+console.log(sum(10,20))
+
+
+// immediately invoked function expressions
+
+(function sum (n1, n2) {
+    console.log (n1+n2);
+})(10 ,5)                    // -> 15
+
+
+// passing function
+
+const sum = (n1, n2) => {
+    return (n1+n2);				// callback function
+}
+
+function print(operation, a, b) {
+    console.log(operation(a,b));		// higher order function
+}
+print(sum, 10, 20)
+
+
+// string manipulation
+
+const str = "    hello again  ";
+console.log( str ,"\n", str.trim());      //    hello again  
+							//hello again
+console.log(str.replace("l","e"))		//    heelo again
+console.log(str.replaceAll("l","e"))	//    heeeo again
+
+
+// arrays
+
+let arr = [1,2,3,4,5]
+arr.push(6, 'karthi')	// [ 1, 2, 3, 4, 5, 6, "karthi" ]
+arr.pop()			// [ 1, 2, 3, 4, 5, 6 ]
+arr.shift()			// [  2, 3, 4, 5, 6 ]
+arr.unshift('hello')	// [ "hello", 2, 3, 4, 5, 6 ]
+
+let arr = [
+    (num) => num*3,     // function
+    {a:1, b:2, c:3, say_hello:()=>"hello"}      // object with function
+]
+
+console.log(arr[0](4))			// 12
+console.log(arr[1].say_hello())	// hello
+for (let key in arr[1]) {
+    console.log(key , arr[1][key])	
+}
+
+// a 1
+// b 2
+// c 3
+// say_hello function say_hello()
+
+let array = [1,2,3,4,5]
+console.log( array.slice(1,4) )  // [ 2, 3, 4]
+array.splice(2, 2, "hello" , "again")  // 2nd index deletes 2 count and add the remaining args
+console.log(array)	// [ 1, 2, "hello", "again", 5 ]
+
+
+let str = "Karthi";
+console.log(str.slice(1))  //arthi
+
+let str = "Karthi is a representative";
+console.log(str.split(" ")) 	//[ 'Karthi', 'is', ' representative' ]
+
+console.log( (str.split(" ")).map( str => str.charAt(0).toUpperCase() + str.slice(1) ).join(" ") ) 	//Karthi Is A Representative
+
+
+//palindrome 
+
+let pal = "malayalam"
+pal.split("").reverse()
+function isPal (str) {
+    if (str == (str.split("")).join("")) return true;
+    return false;
+}
+
+console.log(isPal(pal)) // true
+
+
+// FOR IN & FOR OF
+
+let arr = [4,5,6,8,36]
+for (k in arr) {
+    console.log(k) // 0, 1, 2, 3, 4
+}
+for (k of arr) {
+    console.log(k) // 4, 5, 6, 8, 36
+}
+
+//FOR EACH
+
+arr.forEach(e=>{console.log(e)})  // 4, 5, 6, 8, 36
+
+//MAP
+
+console.log(arr.map((e)=>e*2)) // [ 8, 10, 12, 16, 72 ]
+
+//REPEAT
+
+let str = "hello world "
+console.log(str.repeat(3))  // hello world hello world hello world 
+
+// FILTER
+console.log ( arr.filter( e => e%4 == 0 ) )  // [ 4, 8, 36 ]
+
+let obj = [
+    {
+        name: "karthi",
+        yob: "2003"
+    },
+    {
+        name: "Watson",
+        yob: "2015"
+    },
+    {
+        name: "Emma",
+        yob: "2000"
+    },
+    {
+        name: "Michel",
+        yob: "2006"
+    },
+    {
+        name: "Jhon",
+        yob: "1942"
+    },
+]
+
+console.log ( obj.filter( e => Number(e.yob) >= 2003 ) )  // [ { name: 'karthi', yob: '2003' },  { name: 'Watson', yob: '2015' },  { name: 'Michel', yob: '2006' } ] 
+console.log ( (obj.filter( e => Number(e.yob) >= 2003 )).map( e => e.name) )  // [ 'karthi', 'Watson', 'Michel' ]
+
+let obj = [
+    {
+        name: "karthi",
+        age: 18,
+        salary: 50000,
+        phone: 123456789,
+    },
+    {
+        name: "Watson",
+        age: 18,
+        salary: 25000,
+        phone: 125678349,    
+    },
+    {
+        name: "Emma",
+        age: 26,
+        salary: 80000,
+        phone: 561234789,    
+    },
+    {
+        name: "Michel",
+        age: 50,
+        salary: 20000,
+        phone: 156723489,    
+    },
+    {
+        name: "Jhon",
+        age: 36,
+        salary: 15000,
+        phone: 127834569,    
+    },
+]
+
+console.log ( (obj.filter( e => e.salary > 25000 )).map( e => ({name: e.name, age: e.age})) )   //  [ { name: 'karthi', age: 18 }, { name: 'Emma', age: 26 } ]
+
+
+
+
+//DE-STRUCTURING
+
+let arr = [4,5,6,8,36]
+let [ a,b,c,d,e ] = arr
+let { name, age,  phone } = obj[0]
+console.log (a, b, c, d, e)		// 4 5 6 8 36 
+console.log (name, age,  phone )	// karthi 18 123456789
+
+
+// REST OPERATOR
+
+let [a,b,c,...restArr] = arr
+console.log (a,b,c,restArr) 	// 4 5 6 [ 8, 36 ]
+
+// skip variables
+
+let [a,b, ,c,...restArr] = arr
+console.log (a,b,c,restArr)	// 4 5 8 [ 36 ]
+
+let arr = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+let [a, b, , c, d, ...e] = arr
+console.log (a, b, c, d, e)		// 10 20 40 50 [ 60, 70, 80, 90, 100 ]
+
+
+// OBJECT DE-STRUCTURING
+
+let { phone : ph_no , name, ...rest} = obj[0]; 	// originalName : newName  (renaming)
+console.log (name, ph_no, rest)	// karthi 123456789 { age: 18, salary: 50000 } 
+
+// Default operator
+
+let { name, age, class="cse"} = obj[0]
+console.log( class ) 		// cse;
+
+
+
+
+
+// SET TIMEOUT
+
+setTimeout(()=>console.log("hello i am 3 sec delayed"), 3000)
+
+
+// SET Interval
+
+setInterval(()=>console.log("hello i am printed for every 3 sec"), 3000)
+
+
+****************************************************************************************************
+*																		 *
+*  EVENT LOOP !																 *
+*																		 *
+* 																		 *
+* 1) moves the tasks/process to stack												 *
+* 2) checks if the process is a asynchronous ( like timeout function )						 *
+* 3) if async,  it moves to 'webapis' 												 *
+* 4) the tasks wait in webapi till it gets ready ( timeout wait here untill the specified time )	 *
+* 5) when timeout is finished, it is moved to 'Task Queue' 								 *
+* 6) process in task queue are pushed to main stack only when the main stack is fully empty !	 *
+*																		 *
+****************************************************************************************************
+
+=================
+|| API - CALLS ||
+=================
+
+--- PROMISE ---
+
+// state - pending, resolve, reject
+
+const abc = new Promise ((resolve, reject) => {
+    resolve("hello")
+});
+
+abc
+.then ((val)=> {console.log(val);})
+.catch ((err)=>{console.log(err);})
+
+
+
+// jsonplaceholder api
+
+fetch("https://jsonplaceholder.typicode.com/todos/1")   // => returns promise
+.then (res => res.json())						 //  readable stream to object 
+.then (json => console.log(json))				 //  printing the json
+.catch ((err)=>{console.log(err);})
+
+
+
+const promisex = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve("Resolved");
+    }, 4000)
+})
+
+
+promisex.then ((value) => console.log(value))
+    .catch (()=> console.log("error"))
+
+
+
+--- ASYNC AWAIT ---
+
+
+const getData = async () => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/todos');
+    if (res.ok) {
+        const json = await res.json();
+        console.log(json)
+    }
+    else {
+        console.log("error !")
+    }
+}
+getData()
+
+
+
+
+===========
+| MODULES |
+===========
+
+
+const USER_DATA = [ 
+    {
+        id: 1,
+        name: 'ram',
+        email: 'ram@gmail.com',
+        age: 20
+    }
+ ];
+
+ // CRUD
+ const addUser = (new_user) => {
+    // add a new user in USER_DATA
+    USER_DATA.push(new_user);
+ }
+
+ const editUser = (id, key, val) => {
+    let i = USER_DATA.findIndex( ele => ele.id === id)
+    if (i >= 0) {
+        USER_DATA[i][key] = val
+    }
+    else {
+        console.log( 'id is not available')
+    }
+ }
+
+ const editMultipleParams = (id, val) => {
+    let i = USER_DATA.findIndex( ele => ele.id === id)
+    USER_DATA[i] = {...USER_DATA[i], ...val}    // ...val over writes the properties of ...USER_DATA
+ }
+
+//  const deleteUser = id => {
+//     USER_DATA = USER_DATA.filter( e => e.id !== id )    // USER_DATA should not be const
+//  }
+
+ const deleteUser = id => {
+    let i = USER_DATA.findIndex( ele => ele.id === id)
+    if (i!=-1) {
+        USER_DATA.splice(i,1)
+    }
+ }
+
+ addUser({id:2, name:'sam', email:'sam@email.com', age:30})
+
+ console.log(USER_DATA)	// [ { id: 1, name: 'ram', email: 'ram@gmail.com', age: 20 },
+						  { id: 2, name: 'sam', email: 'sam@email.com', age: 30 } ]
+
+ editUser(2,'name','dam')
+
+ console.log(USER_DATA)	// [ { id: 1, name: 'ram', email: 'ram@gmail.com', age: 20 },
+						  { id: 2, name: 'dam', email: 'sam@email.com', age: 30 } ]
+
+ editMultipleParams(2,{name:'cam', age:0})
+
+ console.log(USER_DATA)	// [ { id: 1, name: 'ram', email: 'ram@gmail.com', age: 20 },
+						  { id: 2, name: 'cam', email: 'sam@email.com', age: 0 } ]
+
+ deleteUser(1)
+ 
+ console.log(USER_DATA)	// [ { id: 2, name: 'cam', email: 'sam@email.com', age: 0 } ]
+
+
+
+
+
+DOM - MANIPULATION
+
+
+let b = document.body
+
+b.innerHTML = "<div>Hello</div>"
+b.style.backgroundColor = 'lightblue'
+b.style.color = 'black'
+b.childNodes[0].style.backgroundColor = 'red'
+
+========================================================================================================================
+
+
+
+24-06-23
+
+
+
+Uses of node js
+
+handles heavy request and response handling
+
+
+
+
+----------------------------------
+calculatro_module.js 	// file name
+----------------------------------
+
+
+const addition = (n1, n2) => {
+    console.log(n1+n2)
+}
+const subraction = (n1, n2) => {
+    console.log(n1-n2)
+}
+const multiplication = (n1, n2) => {
+    console.log(n1*n2)
+}
+const division = (n1, n2) => {
+    console.log(n1/n2)
+}
+
+// export  {addition, subraction, multiplication, division};  // only used for module
+module.exports = {addition, subraction, multiplication, division}     // common 
+
+
+
+-----------------------
+app.js	// file name
+-----------------------
+
+// import {addition, subraction, multiplication, division} from './calculator_module.js'  // only used for ES6 module
+const {addition, subraction, multiplication, division} = require('./calculator_module')     // common js
+
+// console.log(process.argv)
+let a,b;
+try {
+    a = parseInt(process.argv[3])
+    b = Number(process.argv[4])
+}
+catch(e) {
+    console.log(e.message)
+}
+
+switch ( process.argv[2] ) {
+    case 'add':
+        addition(a,b)
+        break;
+    case 'sub':
+        subraction(a,b)
+        break;
+    case 'mul':
+        multiplication(a,b)
+        break;
+    case 'div':
+        division(a,b)
+        break;
+    default:
+        console.log('Invalid ')
+        break;
+} 
+
++----------------------------------------------------------------------+
+| 													|
+| node app.js add 8 2  -> enter in terminal to run the file			|
+|  		    		 -> 'add 8 2' are command line arguments		|
+|	10			 -> process.argv has the arguments in array 	|
+|				 -> arguments start from index "2"			|
+|													|
++----------------------------------------------------------------------+
+
+
+
+
+++--------------++
+||  FILE SYSTEM ||
+++--------------++
+
+
+let inputData = "Hello World \n"
+
+const fs = require('fs')
+
+fs.writeFile(`${__dirname}/Notes.txt`, inputData, (err)=> {   // __dirname -> current dir name
+    if (err) {
+        console.log(err)
+    }
+    else{
+        console.log ("done write function !");
+    }
+})
+
+fs.readFile(`${__dirname}/Notes.txt`, inputData, (err)=> {
+    if (err) {
+        console.log(err)
+    }
+    else{
+        console.log ("done write function !");
+    }
+})
+
+fs.appendFile(`${__dirname}/Notes.txt`, inputData, (err)=> {
+    if (err) {
+        console.log(err)
+    }
+    else{
+        console.log ("done append function !");
+    }
+})
+
+
+
+++-----------++
+||  PROMISE  ||
+++-----------++
+
+
+function read (filePath) {
+    return new Promise ((resolve, reject)=> {
+    
+        fs.readFile(filePath,(err,data)=> {
+            if (err) {
+                reject("Failed during read !\nMessage : "+err.message)
+            }
+            else{
+                resolve(data);
+            }
+        })
+        
+    })
+}
+
+// read(`${__dirname}/Notes.txt`).then((val)=>{
+//     console.log(val.toString())
+// })
+// .catch((err)=> {
+//     console.log(err)
+// })
+
+
+
+
+function write (filePath, input) {
+    return new Promise ((resolve, reject)=> {
+    
+        fs.writeFile(filePath, input, (err)=> {
+            if (err) {
+                reject("Failed during write !\nMessage : "+err.message)
+            }
+            else{
+                resolve("Write operation done !!!");
+            }
+        })
+        
+    })
+}
+
+
+
+// write(`${__dirname}/Notes.txt`, "HELLO WORLD")
+// .then ((data)=>{
+//     console.log(data)
+// })
+// .catch((err)=> {
+//     console.log(err)
+// })
+
+
+
+// copy contents of file
+
+read(`${__dirname}/Notes.txt`)
+.then((data)=>{
+    console.log(data.toString())
+    return write(`${__dirname}/text.txt`, data)
+    .then ((data)=>{
+        console.log(data)
+    })
+})
+.catch((err)=> {
+    console.log(err)
+})
