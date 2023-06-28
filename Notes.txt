@@ -1289,3 +1289,225 @@ read(`${__dirname}/Notes.txt`)
 .catch((err)=> {
     console.log(err)
 })
+
+// joining states and capital into a file
+
+read(`${__dirname}/states.txt`)
+.then((state)=>{
+    let states = state.toString().split('\r\n')
+
+    return read(`${__dirname}/capital.txt`)
+    .then ((capital)=>{
+        let capitals = capital.toString().split('\r\n')
+
+        let str = (states.map((e,i) => e+' - '+capitals[i]+'\r\n')).join('')
+
+        return write(`${__dirname}/stateAndCapital.txt`, str)
+        .then ((data) => console.log(data))
+    })
+})
+.catch((err)=> {
+    console.log(err)
+})
+
+
+// server
+
+
+const http = require("http")
+const hostname = 'localhost'
+const port = 3000;
+const requestListener = function (req, res) {
+    res.setHeader("Content_Type", "text/html");
+    res.writeHead(200) 
+    res.end(`
+        <h1>Caution</h1>
+    `)
+}
+
+const server = http.createServer(requestListener)
+server.listen(port, hostname, ()=> {
+    console.log("server is running")
+})
+
+
+// server sending json file
+
+const http = require("http")
+const hostname = 'localhost'
+const port = 3000;
+const fs = require('fs')
+
+function read (filePath) {
+    return new Promise ((resolve, reject)=> {
+    
+        fs.readFile(filePath,(err,data)=> {
+            if (err) {
+                reject("Failed during read !\nMessage : "+err.message)
+            }
+            else{
+                resolve(data);
+            }
+        })
+        
+    })
+}
+
+let txt;
+
+read('../states.txt')
+.then((data)=> {
+    txt = data.toString().split('\r\n')
+})
+.catch(e=>console.log(e))
+
+const requestListener = function (req, res) {
+    res.setHeader("Content_Type", "application/json");
+    res.writeHead(200) 
+    res.end(`
+        {
+            "states" : [${txt}],
+            "length" : ${txt.length}
+        }
+    `)
+}
+
+const server = http.createServer(requestListener)
+server.listen(port, hostname, ()=> {
+    console.log("server is running")
+})
+
+
+
+====================================================================================
+
+
+const http = require("http")
+const hostname = 'localhost'
+const port = 3000;
+const fs = require('fs')
+
+function read (filePath) {
+    return new Promise ((resolve, reject)=> {
+    
+        fs.readFile(filePath,(err,data)=> {
+            if (err) {
+                reject("Failed during read !\nMessage : "+err.message)
+            }
+            else{
+                resolve(data);
+            }
+        })
+        
+    })
+}
+
+const requestListener = async (req, res) => {
+    try {
+        let data;
+        console.log(req.url);
+        switch(req.url) {
+            case '/states': {
+               data = await read(`../states.txt`);
+               data = data.toString().split('\r\n');
+               break;
+            }
+            case '/capital': {
+                data = await read(`../capital.txt`);
+               data = data.toString().split('\r\n');
+               break;
+            }
+            default: {
+                data = "Not found";
+                break;
+            }
+        }
+        res.setHeader("Content_Type", "application/json");
+        res.writeHead(200) 
+        res.end(`
+            {
+                "data" : [${data}],
+                "length" : ${data.length}
+            }
+        `)
+        
+    }
+    catch(e) {
+        console.log(e)
+    }
+}
+
+const server = http.createServer(requestListener)
+server.listen(port, hostname, ()=>aw {
+    console.log("server is running")
+})
+
+
+async, promise, http, status roll, mongo
+
++-----------------+
+| printing object |
++-----------------+
+
+const data = require("./dummy.json")
+let print = console.log
+// let keys = ["name", "age", "class"]
+// keys.forEach((a)=>print(data[a]))
+
+// keys = Object.keys(data)
+
+const printJSON = (data,i=0) =>{
+    keys = Object.keys(data)
+    keys.forEach((a)=>{
+        if (typeof data[a] == 'object' ){
+            print(("  ".repeat(i))+a + ":" )
+            i+=1
+            printJSON(data[a],i)
+        }
+        else {
+            print(("  ".repeat(i))+a+" : " + data[a])
+        }
+    })
+}
+printJSON(data);
+
+
++---------+
+| express |
++---------+
+
+const express = require('express')
+const path = require("path")
+
+let port = 3000
+let app = express();
+
+app.get('/',(req, res) => {
+    res.send("This is a get call")
+})
+
+app.post('/',(req, res) => {
+    res.send("This is a post call")
+})
+
+app.patch('/',(req, res) => {
+    res.send("This is a put call")
+})
+
+app.patch('/',(req, res) => {
+    res.send("This is a patch call")
+})
+
+app.delete('/',(req, res) => {
+    res.send("This is a delete call")
+})
+
+app.get('/file',(req, res) => {
+    res.sendFile(path.join(__dirname, './index.html'))
+})
+
+app.listen(port, ()=>{
+    console.log("server is running on port : " + port);
+})
+
+
